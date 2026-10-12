@@ -3,27 +3,38 @@
 @section('title', 'Daftar Buku')
 
 @section('content')
+    <a href="{{ route('books.create') }}">Tambah Buku</a>
 
-<h2>Daftar Buku</h2>
-
-<p>Daftar buku yang tersedia di perpustakaan.</p>
-
-<p>http://127.0.0.1:8000/books</p>
-
-@foreach($books as $book)
-
-    <h3>{{ $book->title }}</h3>
-
-    <p>Penulis: {{ $book->author }}</p>
-    <p>Tahun: {{ $book->year }}</p>
-    <p>Stok: {{ $book->stock }}</p>
-
-    @if($book->stock > 0)
-        <p>Stok tersedia</p>
-    @else
-        <p>Stok habis</p>
-    @endif
-
-@endforeach
-
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Judul</th>
+                <th>Penulis</th>
+                <th>Tahun</th>
+                <th>Stok</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($books as $book)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $book->title }}</td>
+                    <td>{{ $book->author }}</td>
+                    <td>{{ $book->year }}</td>
+                    <td>{{ $book->stock }}</td>
+                    <td>
+                        <a href="{{ route('books.show', $book) }}">Detail</a>
+                        <a href="{{ route('books.edit', $book) }}">Edit</a>
+                        <form action="{{ route('books.destroy', $book) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @endsection

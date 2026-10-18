@@ -3,6 +3,11 @@
 @section('title', 'Daftar Buku')
 
 @section('content')
+    @if (session('success'))
+        <p>{{  session('success') }}</p>
+        
+    @endif
+
     <a href="{{ route('books.create') }}">Tambah Buku</a>
 
     <table>
@@ -27,11 +32,19 @@
                     <td>
                         <a href="{{ route('books.show', $book) }}">Detail</a>
                         <a href="{{ route('books.edit', $book) }}">Edit</a>
-                        <form action="{{ route('books.destroy', $book) }}" method="POST" style="display: inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Hapus</button>
-                        </form>
+                        
+                    <form
+                        action="{{ route('books.destroy', $book) }}"
+                        method="POST"
+                        style="display: inline-block;"
+                        onsubmit="return confirm('Yakin ingin menghapus buku {{ $book->title }} ini?')">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit">Hapus</button>
+                    </form>
+
                     </td>
                 </tr>
             @endforeach

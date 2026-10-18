@@ -9,11 +9,11 @@ class MemberController extends Controller
     public function index()
     {
         $members = [
-            'Andi',
-            'Novan Bahtiar',
-            'Abdul Kadir',
-            'Bambang Hariyanto',
-            'Rosa A.S.',
+            'Dika Saputra',
+            'Novita Sari',
+            'Syifa Rahmawati',
+            'Toni',
+            'Rachel',
         ];
 
         return view('members.index', compact('members'));

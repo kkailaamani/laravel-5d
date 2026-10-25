@@ -4,8 +4,7 @@
 
 @section('content')
     @if (session('success'))
-        <p>{{  session('success') }}</p>
-        
+        <p>{{ session('success') }}</p>
     @endif
 
     <a href="{{ route('books.create') }}">Tambah Buku</a>
@@ -18,36 +17,43 @@
                 <th>Penulis</th>
                 <th>Tahun</th>
                 <th>Stok</th>
+                <th>Kategori</th>
                 <th>Aksi</th>
             </tr>
         </thead>
+
         <tbody>
-            @foreach($books as $book)
+            @foreach ($books as $book)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
                     <td>{{ $book->year }}</td>
                     <td>{{ $book->stock }}</td>
+
+                    <td>
+                        {{ $book->category?->name ?? 'Belum ada kategori' }}
+                    </td>
+
                     <td>
                         <a href="{{ route('books.show', $book) }}">Detail</a>
                         <a href="{{ route('books.edit', $book) }}">Edit</a>
-                        
-                    <form
-                        action="{{ route('books.destroy', $book) }}"
-                        method="POST"
-                        style="display: inline-block;"
-                        onsubmit="return confirm('Yakin ingin menghapus buku {{ $book->title }} ini?')">
 
-                        @csrf
-                        @method('DELETE')
+                        <form
+                            action="{{ route('books.destroy', $book) }}"
+                            method="POST"
+                            style="display: inline-block;"
+                            onsubmit="return confirm('Yakin ingin menghapus buku {{ $book->title }} ini?')">
 
-                        <button type="submit">Hapus</button>
-                    </form>
+                            @csrf
+                            @method('DELETE')
 
+                            <button type="submit">Hapus</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 @endsection
+```

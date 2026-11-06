@@ -22,7 +22,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::middleware('auth')->group(function () {
     // Route buku yang hanya boleh diakses setelah login.
     Route::get('/', function () {
-    return view('welcome');
+        return redirect()->route('books.index');
     });
 
     Route::resource('books', BookController::class);
@@ -30,3 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('members', MemberController::class);
 
 });
+
+Route::middleware(['auth', 'can:manage-users'])->group(function () {
+    Route::get('/users', function () {
+        return ("Halo");
+    });
+ });
+
+// Route::resource('users', UserController::class)->middleware(['auth', 'can:manage-users']);
